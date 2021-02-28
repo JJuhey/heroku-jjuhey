@@ -1,10 +1,9 @@
+import { Paper } from '@material-ui/core'
 import React from 'react'
 
 const MainPage = () => {
   return (
-    <div>
-      This is Main Page!
-    </div>
+    <div>Main Page</div>
   )
 }
 
