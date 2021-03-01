@@ -1,0 +1,33 @@
+
+.table {
+  border-spacing: 0 1.2em;
+
+  .label {
+    width: 180px;
+    font-weight: bold;
+    vertical-align: top;
+  }
+
+  .warning {
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 20px;
+    text-align: center;
+  }
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+    margin-bottom: 5px;
+    margin-right: 5px;
+  }
+}
+
+.contents {
+  div {
+    margin-bottom: 5px;
+  }
+}

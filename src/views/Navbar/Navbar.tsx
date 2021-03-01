@@ -2,7 +2,7 @@ import React from 'react'
 import { AppBar, Box, Button, Container, CssBaseline, Slide, Toolbar, Typography, useScrollTrigger } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
-import './Navbar.scss'
+import styles from './Navbar.module.scss'
 
 interface PropsType {
   window?: () => Window;
@@ -28,7 +28,7 @@ const Components = (props: PropsType) => {
         <HideOnScroll {...props}>
           <AppBar position='fixed'>
             <Toolbar variant='dense'>
-              <Typography variant='h6' className='title'>JJuhey</Typography>
+              <Typography variant='h6' className='title'>JJU</Typography>
               <Link to='/blog' className='link'>
                 <Button color='inherit'>Blog</Button>
               </Link>
