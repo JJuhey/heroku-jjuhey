@@ -1,9 +1,11 @@
 .App {
-  text-align: center;
+  margin-top: -50px;
 }
 
-.offset {
-  margin-top: 100px;
+.background {
+  background-image: url('./assets/images/background.jpeg');
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 .outer {
@@ -15,6 +17,14 @@
     width: 90%;
     height: 1000px;
     padding: 20px;
+    // margin-top: 50px;
+  }
+
+  .mainTitle {
+    padding: 17%;
+    color: white;
+    font-size: 1.7rem;
+    font-weight: 600;
   }
 }
 
