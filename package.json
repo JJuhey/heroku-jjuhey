@@ -9,11 +9,11 @@
     "server": "node ./server/index",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "start": "yarn build && node ./build/index",
+    "build-start": "yarn build && node ./build/index",
     "client-build": "cd client && yarn && yarn build",
     "build": "yarn clean && yarn babel-build",
     "babel-build": "babel -d ./build ./server -s",
-    "clean": "mkdir ./build",
+    "clean": "rm -rf ./build && mkdir ./build",
     "heroku-postbuild": "cd client && yarn && yarn build"
   },
   "dependencies": {
