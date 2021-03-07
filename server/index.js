@@ -5,7 +5,12 @@ const cookieParser = require('cookie-parser');
 const config = require('./config')
 
 const app = express()
+
+// front-end routing
 app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
+})
 
 app.use(bodyParser.urlencoded({ extends: true }))
 app.use(bodyParser.json());
