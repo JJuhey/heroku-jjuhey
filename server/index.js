@@ -21,7 +21,7 @@ app.use(cookieParser());
 const mongoose = require('mongoose');
 const UserSchema = require('./Model/UserSchema');
 mongoose.connect(config.mongoURI, {
-  useNewUrlParser: true, useUnifiedTopology: false, useCreateIndex: true, useFindAndModify: false,
+  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false,
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.error(err))
 
@@ -41,7 +41,8 @@ app.post('/api/users/login', (req, res) => {
   })
 })
 
+const ip = process.env.IP || 'localhost'
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`JJuhey-heroku App Listening at http://localhost:${port}`);
+  console.log(`JJuhey-heroku App Listening at ${ip}:${port}`);
 })
