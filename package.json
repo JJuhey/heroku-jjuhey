@@ -9,7 +9,7 @@
     "server": "node ./server/index",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "build-start": "yarn build && node ./build/index",
+    "start": "yarn build && node ./build/index",
     "client-build": "cd client && yarn && yarn build",
     "build": "yarn clean && yarn babel-build",
     "babel-build": "babel -d ./build ./server -s",
