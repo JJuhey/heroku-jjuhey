@@ -7,7 +7,9 @@ const config = require('./config')
 const app = express()
 
 // front-end routing
-app.use(express.static(path.join(__dirname, '../client/build')));
+if (config.env === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"))
 })
@@ -19,7 +21,7 @@ app.use(cookieParser());
 const mongoose = require('mongoose');
 const UserSchema = require('./Model/UserSchema');
 mongoose.connect(config.mongoURI, {
-  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false,
+  useNewUrlParser: true, useUnifiedTopology: false, useCreateIndex: true, useFindAndModify: false,
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.error(err))
 
