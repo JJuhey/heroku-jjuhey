@@ -31,8 +31,11 @@ export const LoginModal: React.FC<PropsType> = ({
 
 
   const handleSubmit = async () => {
+    console.log('handleSubmit function')
     const response = await axios.post('/api/users/login', userInfo)
     console.log(response.data)
+
+    onClose()
   }
   return (
     <Dialog

@@ -27,7 +27,7 @@ app.get('/api/hello', (req, res) => {
 app.post('/api/users/login', (req, res) => {
   UserSchema.findOne({ email: req.body.email }, (err, user) => {
     if(!user) {
-      return res.json({ success: false, massage: 'no user' })
+      return res.json({ success: false, massage: 'no user', err })
     }
 
     res.json({ success: true, user: user })

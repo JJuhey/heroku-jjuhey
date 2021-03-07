@@ -2,9 +2,9 @@
 
 ## Start App
 * For Development
-`yarn dev`
-BackEnd only: `yarn server`
-FrontEnd only: `yarn client`
+  * `yarn dev`
+  * BackEnd only: `yarn server`
+  * FrontEnd only: `yarn client`
 
 * For Build
 0. You should remove build folder before build
