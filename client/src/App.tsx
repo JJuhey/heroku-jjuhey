@@ -15,7 +15,7 @@ const App: React.FC =() => {
       <Router>
         <Navbar/>
           <Route exact path='/' component={MainPage} />
-          <Route path='/login' component={LoginPage} />
+          {/* <Route path='/login' component={LoginPage} /> */}
           <Route path='/blog' component={BlogPage} />
       </Router>
     </div>

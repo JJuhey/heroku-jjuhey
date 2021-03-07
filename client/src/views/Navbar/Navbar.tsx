@@ -3,6 +3,7 @@ import { AppBar, Box, Button, Container, CssBaseline, Slide, Toolbar, Typography
 import { Link } from 'react-router-dom'
 
 import './Navbar.scss'
+import { LoginModal } from '../../components/Modal/LoginModal'
 
 interface PropsType {
   window?: () => Window;
@@ -21,6 +22,15 @@ function HideOnScroll(props: PropsType) {
   )
 }
 const Components = (props: PropsType) => {
+  const [showLogin, isShowLogin] = React.useState(false)
+
+  const handleOpenModal = () => {
+    isShowLogin(true)
+  }
+  const handleCloseModal = () => {
+    isShowLogin(false)
+  }
+
   return (
     <div className='section'>
       <div className='container'>
@@ -32,9 +42,7 @@ const Components = (props: PropsType) => {
               <Link to='/blog' className='link'>
                 <Button color='inherit'>Blog</Button>
               </Link>
-              <Link to='/login' className='link'>
-                <Button color='inherit'>Login</Button>
-              </Link>
+              <Button color='inherit' onClick={handleOpenModal}>Login</Button>
             </Toolbar>
           </AppBar>
         </HideOnScroll>
@@ -42,6 +50,10 @@ const Components = (props: PropsType) => {
           <Box my={12}></Box>
         </Container>
       </div>
+      <LoginModal
+        show={showLogin}
+        onClose={handleCloseModal}
+      />
     </div>
   )
 }
