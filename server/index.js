@@ -5,7 +5,14 @@ const cookieParser = require('cookie-parser');
 const config = require('./config')
 
 const app = express()
-app.use(express.static(path.join(__dirname, '../client/build')));
+
+// front-end routing
+if (config.env === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
+})
 
 app.use(bodyParser.urlencoded({ extends: true }))
 app.use(bodyParser.json());
@@ -30,11 +37,12 @@ app.post('/api/users/login', (req, res) => {
       return res.json({ success: false, massage: 'no user', err })
     }
 
-    res.json({ success: true, user: user })
+    res.json({ success: true, user: { email: user.email } })
   })
 })
 
+const ip = process.env.IP || 'localhost'
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`JJuhey-heroku App Listening at http://localhost:${port}`);
+  console.log(`JJuhey-heroku App Listening at http://${ip}:${port}`);
 })
