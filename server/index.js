@@ -36,5 +36,5 @@ app.post('/api/users/login', (req, res) => {
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`Node Playground App Listening at attp://localhost:${port}`);
+  console.log(`JJuhey-heroku App Listening at http://localhost:${port}`);
 })

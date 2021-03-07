@@ -35,6 +35,7 @@ export const LoginModal: React.FC<PropsType> = ({
     const response = await axios.post('/api/users/login', userInfo)
     console.log(response.data)
 
+    setUserInfo({ email: '', password: '' })
     onClose()
   }
   return (
