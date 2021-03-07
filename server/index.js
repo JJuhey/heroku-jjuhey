@@ -37,12 +37,12 @@ app.post('/api/users/login', (req, res) => {
       return res.json({ success: false, massage: 'no user', err })
     }
 
-    res.json({ success: true, user: user })
+    res.json({ success: true, user: { email: user.email } })
   })
 })
 
 const ip = process.env.IP || 'localhost'
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`JJuhey-heroku App Listening at ${ip}:${port}`);
+  console.log(`JJuhey-heroku App Listening at http://${ip}:${port}`);
 })
