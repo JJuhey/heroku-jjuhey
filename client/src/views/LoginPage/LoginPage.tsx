@@ -7,12 +7,12 @@ const LoginPage: React.FC = () => {
   const [data, setData] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    fetch('/api/data')
-      .then(res => res.json())
-      .then(res => {
-        console.log(res)
-        setData(res.hello)
-    })
+    // fetch('/api/users')
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     console.log(result)
+    //   })
+    //   .catch(err => console.error(err))
   }, [])
 
   return (
