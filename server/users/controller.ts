@@ -1,19 +1,17 @@
-const express = require('express')
-const router = express.Router()
-const userService = require('./service')
-const { auth } = require('../middleware/auth')
+import express from 'express'
+import userService from './service'
+import { auth } from '../middleware/auth'
+import { IUser } from '../models/UserSchema'
 
+const router = express.Router()
 // routes
 router.post('/login', loginUser)
 router.get('/logout', logoutUser)
 router.get('/auth', auth, authUser)
 
-module.exports = router;
-
-function loginUser (req, res, next) {
+function loginUser (req: express.Request, res: express.Response, next: express.NextFunction) {
   userService.login(req.body)
     .then(user => {
-      // cookie에 저장
       return res.cookie('x_auth', user.token)
         .status(200)
         .json({ success: true, userId: user._id })
@@ -21,8 +19,7 @@ function loginUser (req, res, next) {
     .catch(next)
 }
 
-function logoutUser (req, res, next) {
-  console.log('logoutUser()')
+function logoutUser (req: express.Request, res: express.Response, next: express.NextFunction) {
   userService.logout(req.body)
     .then(user => {
       return res.status(200).json({ success: true })
@@ -30,13 +27,16 @@ function logoutUser (req, res, next) {
     .catch(next)
 }
 
-function authUser (req, res, next) {
+function authUser (req: express.Request, res: express.Response, next: express.NextFunction) {
   const { user } = req
+
   return res.status(200).json({
     _id: user._id,
-    isAdmin: !(req.user.role === 0),
+    isAdmin: !(user.role === 0),
     isAuth: true,
     email: user.email,
     name: user.name,
   })
 }
+
+export default router

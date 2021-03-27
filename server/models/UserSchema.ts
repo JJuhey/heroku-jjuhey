@@ -1,16 +1,26 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-const config = require('../config')
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+import config from '../config';
+
 const saltRounds = 10;
 
-const userSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-  name: String,
-  email: String,
-  password: String,
-  token: String,
-  role: Number,
+export interface IUser extends mongoose.Document {
+  name: string;
+  email: string;
+  password: string;
+  token: string;
+  role: number;
+  comparePassword(pwd: string): Promise<boolean>;
+}
+
+const userSchema = new mongoose.Schema<IUser>({
+  name: { type: String, require: true },
+  email: { type: String, require: true, unique: true },
+  password: { type: String, require: true },
+  token: { type: String },
+  role: { type: Number, default: 1 },
 })
 
 // user를 save할 때, 무조건 password를 암호화 처리하도록 해줌
@@ -31,7 +41,7 @@ userSchema.pre('save', function (next) {
 })
 
 // user의 password를 암호화된 비번으로 비교해줌
-userSchema.methods.comparePassword = function (plainPwd, cb) {
+userSchema.methods.comparePassword = function (plainPwd: string): Promise<boolean> {
   return bcrypt.compare(plainPwd, this.password)
 }
 
@@ -43,4 +53,4 @@ userSchema.statics.findByToken = async function (token, cb) {
   cb(null, user)
 }
 
-module.exports = mongoose.model('User', userSchema)
+export default mongoose.model<IUser>('User', userSchema)

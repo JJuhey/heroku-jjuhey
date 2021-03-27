@@ -1,8 +1,11 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const config = require('./config')
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
+
+import config from './config';
+import controller from './users/controller';
 
 const app = express()
 
@@ -11,29 +14,28 @@ if (config.env === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
 
-app.use(bodyParser.urlencoded({ extends: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const mongoose = require('mongoose');
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false,
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.error(err))
 
 // Test Request
-app.get('/api/hello', (req, res) => {
+app.get('/api/hello', (req: express.Request, res: express.Response) => {
   res.json({ hello: 'Hello World!' });
 })
 
-app.use('/api/users', require('./users/controller'));
+app.use('/api/users', controller);
 
-app.get('/*', (req, res) => {
+app.get('/*', (req: express.Request, res: express.Response) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"))
 })
 
 // Error Handling
-app.use((err, req, res, next)=> {
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction)=> {
   console.error(err)
   if (err.message) {
     // custom application error

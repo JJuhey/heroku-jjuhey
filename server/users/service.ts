@@ -1,13 +1,14 @@
-const config = require('../config');
-const jwt = require('jsonwebtoken');
-const User = require('../models/UserSchema');
+import jwt from 'jsonwebtoken';
+import config from '../config';
+
+import User from '../models/UserSchema';
 
 const userService = {
   login,
   logout,
 }
 
-async function login({ email, password }) {
+async function login({ email, password }: { email: string, password: string }) {
   const user = await User.findOne({ email }).exec()
   if (!user) throw Error('No user with email')
 
@@ -22,10 +23,10 @@ async function login({ email, password }) {
   return userWithToken
 }
 
-async function logout({ _id }) {
+async function logout({ _id }: { _id: string }) {
   const user = await User.findByIdAndUpdate(_id, { token: '' })
 
   return user
 }
 
-module.exports = userService
+export default userService
