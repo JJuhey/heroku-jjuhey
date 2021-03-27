@@ -10,10 +10,13 @@ import controller from './users/controller';
 const app = express()
 
 // front-end routing
+console.log(config)
 if (config.env === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
+  app.get('/*', (req: express.Request, res: express.Response) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"))
+  })
 }
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -29,10 +32,6 @@ app.get('/api/hello', (req: express.Request, res: express.Response) => {
 })
 
 app.use('/api/users', controller);
-
-app.get('/*', (req: express.Request, res: express.Response) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
-})
 
 // Error Handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction)=> {
@@ -54,7 +53,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 })
 
 const ip = process.env.IP || 'localhost'
-const port = process.env.PORT || 8082;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`JJuhey-heroku App Listening at http://${ip}:${port}`);
 })

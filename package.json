@@ -9,12 +9,12 @@
     "server": "nodemon --exec babel-node ./server/index.ts --extensions '.ts'",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "start": "yarn build && node ./build/index",
+    "start": "node ./build/index",
     "client-build": "cd client && yarn && yarn build",
-    "build": "yarn clean && yarn babel-build",
+    "build": "yarn clean && yarn && yarn babel-build",
     "babel-build": "babel -d --out-dir ./build ./server -s --extensions '.ts' --source-maps inline && babel -d ./build ./server",
     "clean": "rm -rf ./build && mkdir ./build",
-    "heroku-postbuild": "cd client && yarn && yarn build"
+    "heroku-postbuild": "yarn build && yarn client-build"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
