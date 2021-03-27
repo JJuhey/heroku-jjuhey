@@ -4,7 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 
-import config from './config';
+const config = require('./config')
 import controller from './users/controller';
 
 const app = express()

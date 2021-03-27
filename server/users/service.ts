@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import config from '../config';
 
 import User from '../models/UserSchema';
+const config = require('../config')
 
 const userService = {
   login,

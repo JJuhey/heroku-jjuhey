@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import config from '../config';
+const config = require('../config')
 
 const saltRounds = 10;
 
