@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const config = require('../config')
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
@@ -34,16 +35,12 @@ userSchema.methods.comparePassword = function (plainPwd, cb) {
   return bcrypt.compare(plainPwd, this.password)
 }
 
-// userSchema.methods.findByToken = function (token, cb) {
-//   const user = this;
+userSchema.statics.findByToken = async function (token, cb) {
+  const decode = jwt.verify(token, config.secretToken)
 
-//   jwt.verify(token, 'secretToken', function(err, decode) {
-//     user.findOne({ "id": decode, "token": token }, function (err, user) {
-//       if (err) return cb(err);
-//       cb(null, user)
-//     })
-//   })
-// }
+  const user = await this.findOne({ _id: decode, token })
 
+  cb(null, user)
+}
 
 module.exports = mongoose.model('User', userSchema)

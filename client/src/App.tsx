@@ -7,6 +7,8 @@ import LoginPage from './views/LoginPage/LoginPage'
 import BlogPage from './views/BlogPage/BlogPage'
 import Navbar from './views/Navbar/Navbar'
 
+import Auth from './hoc/auth'
+
 import './App.scss';
 
 const App: React.FC =() => {
@@ -16,7 +18,7 @@ const App: React.FC =() => {
         <Navbar/>
           <Route exact path='/' component={MainPage} />
           {/* <Route path='/login' component={LoginPage} /> */}
-          <Route path='/blog' component={BlogPage} />
+          <Route path='/blog' component={Auth(BlogPage, null)} />
       </Router>
     </div>
   );

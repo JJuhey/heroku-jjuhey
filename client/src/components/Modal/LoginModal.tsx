@@ -32,11 +32,17 @@ export const LoginModal: React.FC<PropsType> = ({
 
   const handleSubmit = async () => {
     console.log('handleSubmit function')
-    const response = await axios.post('/api/users/login', userInfo)
-    console.log(response.data)
+    try {
+      const res = await axios.post('/api/users/login', userInfo)
+      // console.log(res.data)
+      if (!res.data.success) alert(res.data.message)
+    } catch (err) {
+      alert(`Unexpected Error: ${err.message}`)
+    } finally {
+      setUserInfo({ email: '', password: '' })
+      onClose()
+    }
 
-    setUserInfo({ email: '', password: '' })
-    onClose()
   }
   return (
     <Dialog

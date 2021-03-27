@@ -10,9 +10,6 @@ const app = express()
 if (config.env === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
-})
 
 app.use(bodyParser.urlencoded({ extends: true }))
 app.use(bodyParser.json());
@@ -31,11 +28,18 @@ app.get('/api/hello', (req, res) => {
 
 app.use('/api/users', require('./users/controller'));
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
+})
+
 // Error Handling
 app.use((err, req, res, next)=> {
-  if (typeof (err) === 'string') {
+  console.error(err)
+  if (err.message) {
     // custom application error
-    return res.status(400).json({ message: err });
+    return res.json({ success: false, message: err.message });
+  } else if (typeof err === 'string') {
+    return res.json({ success: false, message: err })
   }
 
   if (err.name === 'UnauthorizedError') {

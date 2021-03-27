@@ -31,6 +31,11 @@ const Components = (props: PropsType) => {
     isShowLogin(false)
   }
 
+  const handleLogout = async () => {
+    // const res = await axios.post('/api/users/logout', userId)
+
+  }
+
   return (
     <div className='section'>
       <div className='container'>
@@ -43,6 +48,7 @@ const Components = (props: PropsType) => {
                 <Button color='inherit'>Blog</Button>
               </Link>
               <Button color='inherit' onClick={handleOpenModal}>Login</Button>
+              <Button color='inherit' onClick={handleLogout}>Logout</Button>
             </Toolbar>
           </AppBar>
         </HideOnScroll>
