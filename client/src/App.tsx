@@ -5,6 +5,7 @@ import { Paper } from '@material-ui/core';
 import MainPage from './views/MainPage/MainPage'
 import LoginPage from './views/LoginPage/LoginPage'
 import BlogPage from './views/BlogPage/BlogPage'
+import ProfilePage from './views/ProfilePage/ProfilePage'
 import Navbar from './views/Navbar/Navbar'
 
 import Auth from './hoc/auth'
@@ -17,7 +18,7 @@ const App: React.FC =() => {
       <Router>
         <Navbar/>
           <Route exact path='/' component={MainPage} />
-          {/* <Route path='/login' component={LoginPage} /> */}
+          <Route path='/profile' component={Auth(ProfilePage, null)} />
           <Route path='/blog' component={Auth(BlogPage, null)} />
       </Router>
     </div>

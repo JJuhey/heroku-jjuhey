@@ -8,11 +8,18 @@ function authHOC<PropsType> (
   _adminRoute: string | null = null) {
     function AuthenticationCheck (props: PropsType) {
       const fetchAuth = async () => {
-        const res = await axios.get('/api/users/auth')
-        console.log(res)
+        try {
+          const res = await axios.get('/api/users/auth')
+          if (!res.data.success) {
+            alert('로그인이 필요합니다.')
+            window.location.href = '/'
+          }
+        } catch (err) {
+          console.error(err)
+        }
       }
 
-      useEffect( () => {
+      useEffect(() => {
         fetchAuth()
       }, [])
 

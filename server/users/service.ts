@@ -23,9 +23,8 @@ async function login({ email, password }: { email: string, password: string }) {
   return userWithToken
 }
 
-async function logout({ _id }: { _id: string }) {
+async function logout({ _id }) {
   const user = await User.findByIdAndUpdate(_id, { token: '' })
-
   return user
 }
 

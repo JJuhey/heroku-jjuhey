@@ -45,12 +45,12 @@ userSchema.methods.comparePassword = function (plainPwd: string): Promise<boolea
   return bcrypt.compare(plainPwd, this.password)
 }
 
-userSchema.statics.findByToken = async function (token, cb) {
+userSchema.statics.findByToken = async function (token) {
   const decode = jwt.verify(token, config.secretToken)
 
-  const user = await this.findOne({ _id: decode, token })
+  const user = await this.findOne({ _id: decode, token }).exec()
 
-  cb(null, user)
+  return user
 }
 
 export default mongoose.model<IUser>('User', userSchema)

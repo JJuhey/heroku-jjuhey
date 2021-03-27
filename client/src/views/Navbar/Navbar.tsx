@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { AppBar, Box, Button, Container, CssBaseline, Slide, Toolbar, Typography, useScrollTrigger } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -22,18 +23,47 @@ function HideOnScroll(props: PropsType) {
   )
 }
 const Components = (props: PropsType) => {
-  const [showLogin, isShowLogin] = React.useState(false)
+  const [showLogin, setShowLogin] = React.useState(false)
+  const [sessionInfo, setSessionInfo] = React.useState<any>(null)
+
+  const handleSession = () => {
+    const session = sessionStorage.getItem('session')
+
+    if (session) setSessionInfo(JSON.parse(session))
+    else setSessionInfo(null)
+  }
+
+  React.useEffect(() => {
+    handleSession()
+  }, [])
 
   const handleOpenModal = () => {
-    isShowLogin(true)
+    setShowLogin(true)
   }
   const handleCloseModal = () => {
-    isShowLogin(false)
+    setShowLogin(false)
   }
 
   const handleLogout = async () => {
-    // const res = await axios.post('/api/users/logout', userId)
+    try {
+      let res
+      if (sessionInfo) res = await axios.post('/api/users/logout', sessionInfo)
 
+      sessionStorage.clear()
+      setSessionInfo(null)
+
+    } catch (err) {
+      console.error(err)
+      alert(`Unexpected Error: ${err.message}`)
+    }
+  }
+
+  const goHome = () => {
+    window.location.href = '/'
+  }
+
+  const goBlog = () => {
+    window.location.href = 'https://jjuhey.github.io'
   }
 
   return (
@@ -43,12 +73,15 @@ const Components = (props: PropsType) => {
         <HideOnScroll {...props}>
           <AppBar position='fixed'>
             <Toolbar variant='dense'>
-              <Typography variant='h6' className='title'>JJuhey</Typography>
-              <Link to='/blog' className='link'>
-                <Button color='inherit'>Blog</Button>
+              <Typography variant='h6' className='title' onClick={goHome}>JJuhey</Typography>
+              <Link to='/profile' className='link'>
+                <Button color='inherit'>Profile</Button>
               </Link>
-              <Button color='inherit' onClick={handleOpenModal}>Login</Button>
-              <Button color='inherit' onClick={handleLogout}>Logout</Button>
+              {/* <Link to='/blog' className='link'> */}
+                <Button color='inherit' onClick={goBlog}>Blog</Button>
+              {/* </Link> */}
+              {!sessionInfo &&<Button color='inherit' onClick={handleOpenModal}>Login</Button>}
+              {sessionInfo && <Button color='inherit' onClick={handleLogout}>Logout</Button>}
             </Toolbar>
           </AppBar>
         </HideOnScroll>
@@ -59,6 +92,7 @@ const Components = (props: PropsType) => {
       <LoginModal
         show={showLogin}
         onClose={handleCloseModal}
+        handleSession={handleSession}
       />
     </div>
   )

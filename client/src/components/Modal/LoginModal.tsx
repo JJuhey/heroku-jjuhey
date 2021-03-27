@@ -10,10 +10,11 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 type PropsType = {
   show: boolean;
   onClose: () => void;
+  handleSession: () => void;
 }
 
 export const LoginModal: React.FC<PropsType> = ({
-  show, onClose,
+  show, onClose, handleSession
 }) => {
   const [userInfo, setUserInfo] = React.useState<{ email: string, password: string }>({
     email: '',
@@ -31,14 +32,16 @@ export const LoginModal: React.FC<PropsType> = ({
 
 
   const handleSubmit = async () => {
-    console.log('handleSubmit function')
+    // console.log('handleSubmit function')
     try {
       const res = await axios.post('/api/users/login', userInfo)
-      // console.log(res.data)
-      if (!res.data.success) alert(res.data.message)
+
+      if (!res.data.success) alert(`Cannot login: ${res.data.message}`)
+      else sessionStorage.setItem('session', JSON.stringify(res.data))
     } catch (err) {
       alert(`Unexpected Error: ${err.message}`)
     } finally {
+      handleSession()
       setUserInfo({ email: '', password: '' })
       onClose()
     }
